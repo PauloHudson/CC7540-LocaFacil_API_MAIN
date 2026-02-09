@@ -84,27 +84,7 @@ class RentalModel {
     return result.rows[0];
   }
 
-  static async checkAvailability(item_id, item_type, start_date, end_date) {
-    let query;
-    if (item_type === 'vehicle') {
-      query = `
-        SELECT COUNT(*) as count FROM rentals 
-        WHERE vehicle_id = $1 
-        AND status = 'active'
-        AND daterange(start_date, end_date, '[]') && daterange($2::date, $3::date, '[]')
-      `;
-    } else {
-      query = `
-        SELECT COUNT(*) as count FROM rentals 
-        WHERE electronic_id = $1 
-        AND status = 'active'
-        AND daterange(start_date, end_date, '[]') && daterange($2::date, $3::date, '[]')
-      `;
-    }
-
-    const result = await pool.query(query, [item_id, start_date, end_date]);
-    return Number(result.rows[0].count) === 0;
-  }
+  
 }
 
 module.exports = RentalModel;

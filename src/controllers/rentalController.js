@@ -44,18 +44,6 @@ const rentalController = {
           return res.status(404).json({ error: 'Veiculo nao encontrado' });
         }
 
-        // Verificar disponibilidade
-        const isAvailable = await RentalModel.checkAvailability(
-          vehicle_id,
-          'vehicle',
-          start_date,
-          end_date
-        );
-
-        if (!isAvailable) {
-          return res.status(409).json({ error: 'Veiculo indisponivel' });
-        }
-
         daily_rate = vehicle.daily_price;
         rentalType = 'vehicle';
         item_id = vehicle_id;
@@ -63,18 +51,6 @@ const rentalController = {
         const electronic = await ElectronicModel.findById(electronic_id);
         if (!electronic) {
           return res.status(404).json({ error: 'Eletronico nao encontrado' });
-        }
-
-        // Verificar disponibilidade
-        const isAvailable = await RentalModel.checkAvailability(
-          electronic_id,
-          'electronic',
-          start_date,
-          end_date
-        );
-
-        if (!isAvailable) {
-          return res.status(409).json({ error: 'Eletronico indisponivel' });
         }
 
         daily_rate = electronic.daily_price;
