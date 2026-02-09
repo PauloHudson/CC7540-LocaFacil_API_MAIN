@@ -31,7 +31,7 @@ app.use('/api/users', userRoutes);
 
 // 404
 app.use((req, res) => {
-  res.status(404).json({ error: 'Rota nao existe' });
+  res.status(404).json({ error: 'Api ta rodando kkkkk' });
 });
 
 // Error handling
