@@ -91,14 +91,14 @@ class RentalModel {
         SELECT COUNT(*) as count FROM rentals 
         WHERE vehicle_id = $1 
         AND status = 'active'
-        AND tsrange(start_date, end_date) && tsrange($2::date, $3::date)
+        AND daterange(start_date, end_date, '[]') && daterange($2::date, $3::date, '[]')
       `;
     } else {
       query = `
         SELECT COUNT(*) as count FROM rentals 
         WHERE electronic_id = $1 
         AND status = 'active'
-        AND tsrange(start_date, end_date) && tsrange($2::date, $3::date)
+        AND daterange(start_date, end_date, '[]') && daterange($2::date, $3::date, '[]')
       `;
     }
 
