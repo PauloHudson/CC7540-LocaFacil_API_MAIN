@@ -1,6 +1,14 @@
 const UserModel = require('../models/User');
 
-const userController = {
+class UserController {
+  constructor() {
+    this.getAll = this.getAll.bind(this);
+    this.getById = this.getById.bind(this);
+    this.update = this.update.bind(this);
+    this.makeAdmin = this.makeAdmin.bind(this);
+    this.deactivateUser = this.deactivateUser.bind(this);
+  }
+
   async getAll(req, res) {
     try {
       const users = await UserModel.getAll();
@@ -9,7 +17,7 @@ const userController = {
       console.error('Erro ao listar usuários:', error);
       res.status(500).json({ error: 'Erro ao listar' });
     }
-  },
+  }
 
   async getById(req, res) {
     try {
@@ -32,7 +40,7 @@ const userController = {
       console.error('Erro ao buscar usuário:', error);
       res.status(500).json({ error: 'Erro ao buscar' });
     }
-  },
+  }
 
   async update(req, res) {
     try {
@@ -59,7 +67,7 @@ const userController = {
       console.error('Erro ao atualizar usuário:', error);
       res.status(500).json({ error: 'Erro ao atualizar' });
     }
-  },
+  }
 
   async makeAdmin(req, res) {
     try {
@@ -75,7 +83,7 @@ const userController = {
       console.error('Erro ao promover usuário:', error);
       res.status(500).json({ error: 'Erro ao promover' });
     }
-  },
+  }
 
   async deactivateUser(req, res) {
     try {
@@ -92,6 +100,6 @@ const userController = {
       res.status(500).json({ error: 'Erro ao desativar' });
     }
   }
-};
+}
 
-module.exports = userController;
+module.exports = new UserController();

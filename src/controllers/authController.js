@@ -2,7 +2,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/User');
 
-const authController = {
+class AuthController {
+  constructor() {
+    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+  }
+
   async register(req, res) {
     try {
       const { name, email, password, phone, cpf } = req.body;
@@ -47,7 +53,7 @@ const authController = {
       console.error('Erro no registro:', error);
       res.status(500).json({ error: 'Erro ao registrar' });
     }
-  },
+  }
 
   async login(req, res) {
     try {
@@ -91,7 +97,7 @@ const authController = {
       console.error('Erro no login:', error);
       res.status(500).json({ error: 'Erro ao logar' });
     }
-  },
+  }
 
   async getProfile(req, res) {
     try {
@@ -114,6 +120,6 @@ const authController = {
       res.status(500).json({ error: 'Erro no perfil' });
     }
   }
-};
+}
 
-module.exports = authController;
+module.exports = new AuthController();
