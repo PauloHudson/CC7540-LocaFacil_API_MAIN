@@ -29,10 +29,10 @@ class ElectronicModel {
   }
 
   static async create(data) {
-    const { name, brand, model, specifications, daily_price } = data;
+    const { name, brand, model, specifications, daily_price, image_urls } = data;
     const result = await pool.query(
-      'INSERT INTO electronics (name, brand, model, specifications, daily_price) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, brand, model, specifications, daily_price]
+      'INSERT INTO electronics (name, brand, model, specifications, daily_price, image_urls) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [name, brand, model, specifications, daily_price, image_urls || null]
     );
     return result.rows[0];
   }

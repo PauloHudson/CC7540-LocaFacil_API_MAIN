@@ -37,7 +37,7 @@ const electronicController = {
 
   async create(req, res) {
     try {
-      const { name, brand, model, specifications, daily_price } = req.body;
+      const { name, brand, model, specifications, daily_price, image_urls } = req.body;
 
       if (!name || !brand || !model || !daily_price) {
         return res.status(400).json({ error: 'Campos faltando' });
@@ -48,7 +48,8 @@ const electronicController = {
         brand,
         model,
         specifications,
-        daily_price
+        daily_price,
+        image_urls
       });
 
       res.status(201).json({
@@ -64,7 +65,7 @@ const electronicController = {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { name, brand, model, specifications, daily_price, status } = req.body;
+      const { name, brand, model, specifications, daily_price, status, image_urls } = req.body;
 
       const electronic = await ElectronicModel.update(id, {
         name: name || undefined,
@@ -72,7 +73,8 @@ const electronicController = {
         model: model || undefined,
         specifications: specifications || undefined,
         daily_price: daily_price || undefined,
-        status: status || undefined
+        status: status || undefined,
+        image_urls: image_urls || undefined
       });
 
       res.json({
