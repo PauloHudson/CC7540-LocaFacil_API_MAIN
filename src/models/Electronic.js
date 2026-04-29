@@ -5,21 +5,41 @@ const normalizeImageUrls = (imageUrls) => {
     return null;
   }
 
-  // Handle objects (convert keys to array)
+  console.log('[normalizeImageUrls] Input type:', typeof imageUrls, 'value:', imageUrls);
+
+  // Handle objects (e.g., {"url": ["url"]} or {"url": true})
   if (typeof imageUrls === 'object' && !Array.isArray(imageUrls)) {
-    const urls = Object.keys(imageUrls).filter(url => url && url.trim());
-    return urls.length ? urls : null;
+    const keys = Object.keys(imageUrls);
+    if (keys.length > 0) {
+      // If the value is an array, use it
+      if (Array.isArray(imageUrls[keys[0]])) {
+        console.log('[normalizeImageUrls] Extracted array from object:', imageUrls[keys[0]]);
+        return imageUrls[keys[0]];
+      }
+      // Otherwise, use the keys (they are the URLs)
+      const urls = keys.filter(url => url && url.trim());
+      console.log('[normalizeImageUrls] Extracted keys as URLs:', urls);
+      return urls.length ? urls : null;
+    }
+    return null;
   }
 
+  // Handle arrays
   if (Array.isArray(imageUrls)) {
-    const normalized = imageUrls.map((url) => String(url).trim()).filter(Boolean);
+    const normalized = imageUrls
+      .flat()
+      .map((url) => String(url).trim())
+      .filter(Boolean);
+    console.log('[normalizeImageUrls] Normalized array:', normalized);
     return normalized.length ? normalized : null;
   }
 
+  // Handle strings
   const normalized = String(imageUrls)
     .split(/[\n,]/)
     .map((url) => url.trim())
     .filter(Boolean);
+  console.log('[normalizeImageUrls] Normalized string:', normalized);
 
   return normalized.length ? normalized : null;
 };
