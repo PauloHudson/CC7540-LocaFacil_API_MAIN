@@ -38,6 +38,7 @@ const electronicController = {
   async create(req, res) {
     try {
       const { name, brand, model, specifications, daily_price, image_urls } = req.body;
+      console.log('Debug: electronic.create received image_urls ->', image_urls);
 
       if (!name || !brand || !model || !daily_price) {
         return res.status(400).json({ error: 'Campos faltando' });

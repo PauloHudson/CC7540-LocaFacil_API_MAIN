@@ -38,6 +38,7 @@ const vehicleController = {
   async create(req, res) {
     try {
       const { name, brand, model, year, color, license_plate, daily_price, image_urls } = req.body;
+      console.log('Debug: vehicle.create received image_urls ->', image_urls);
 
       if (!name || !brand || !model || !year || !daily_price) {
         return res.status(400).json({ error: 'Campos faltando' });
