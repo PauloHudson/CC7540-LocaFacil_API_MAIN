@@ -11,15 +11,16 @@ const normalizeImageUrls = (imageUrls) => {
   if (typeof imageUrls === 'object' && !Array.isArray(imageUrls)) {
     const keys = Object.keys(imageUrls);
     if (keys.length > 0) {
-      // If the value is an array, use it
+      // If the value is an array, use its first item as the single URL
       if (Array.isArray(imageUrls[keys[0]])) {
-        console.log('[normalizeImageUrls] Extracted array from object:', imageUrls[keys[0]]);
-        return imageUrls[keys[0]];
+        const firstUrl = String(imageUrls[keys[0]][0] || '').trim();
+        console.log('[normalizeImageUrls] Extracted first URL from object array:', firstUrl);
+        return firstUrl || null;
       }
-      // Otherwise, use the keys (they are the URLs)
-      const urls = keys.filter(url => url && url.trim());
-      console.log('[normalizeImageUrls] Extracted keys as URLs:', urls);
-      return urls.length ? urls : null;
+      // Otherwise, use the first key (it is the URL)
+      const firstKey = String(keys[0] || '').trim();
+      console.log('[normalizeImageUrls] Extracted first key as URL:', firstKey);
+      return firstKey || null;
     }
     return null;
   }
@@ -30,8 +31,9 @@ const normalizeImageUrls = (imageUrls) => {
       .flat()
       .map((url) => String(url).trim())
       .filter(Boolean);
-    console.log('[normalizeImageUrls] Normalized array:', normalized);
-    return normalized.length ? normalized : null;
+    const firstUrl = normalized[0] || null;
+    console.log('[normalizeImageUrls] Normalized array first URL:', firstUrl);
+    return firstUrl;
   }
 
   // Handle strings
@@ -39,9 +41,9 @@ const normalizeImageUrls = (imageUrls) => {
     .split(/[\n,]/)
     .map((url) => url.trim())
     .filter(Boolean);
-  console.log('[normalizeImageUrls] Normalized string:', normalized);
+  console.log('[normalizeImageUrls] Normalized string first URL:', normalized[0] || null);
 
-  return normalized.length ? normalized : null;
+  return normalized[0] || null;
 };
 
 class VehicleModel {
