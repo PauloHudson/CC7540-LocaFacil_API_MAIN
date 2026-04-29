@@ -1,5 +1,23 @@
 const pool = require('../config/database');
 
+const normalizeImageUrls = (imageUrls) => {
+  if (!imageUrls) {
+    return null;
+  }
+
+  if (Array.isArray(imageUrls)) {
+    const normalized = imageUrls.map((url) => String(url).trim()).filter(Boolean);
+    return normalized.length ? normalized : null;
+  }
+
+  const normalized = String(imageUrls)
+    .split(/[\n,]/)
+    .map((url) => url.trim())
+    .filter(Boolean);
+
+  return normalized.length ? normalized : null;
+};
+
 class ElectronicModel {
   static async findById(id) {
     const result = await pool.query('SELECT * FROM electronics WHERE id = $1', [id]);
@@ -30,9 +48,10 @@ class ElectronicModel {
 
   static async create(data) {
     const { name, brand, model, specifications, daily_price, image_urls } = data;
+    const normalizedImageUrls = normalizeImageUrls(image_urls);
     const result = await pool.query(
       'INSERT INTO electronics (name, brand, model, specifications, daily_price, image_urls) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [name, brand, model, specifications, daily_price, image_urls || null]
+      [name, brand, model, specifications, daily_price, normalizedImageUrls]
     );
     return result.rows[0];
   }
@@ -43,8 +62,9 @@ class ElectronicModel {
     let paramCount = 1;
 
     Object.keys(data).forEach(key => {
+      const value = key === 'image_urls' ? normalizeImageUrls(data[key]) : data[key];
       fields.push(`${key} = $${paramCount}`);
-      values.push(data[key]);
+      values.push(value);
       paramCount++;
     });
 

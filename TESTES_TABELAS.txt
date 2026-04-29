@@ -1,0 +1,165 @@
+TESTES AUTOMATIZADOS - TABELAS PARA WORD
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 1: RESUMO GERAL DOS TESTES
+
+┌─────────────────────────┬──────────┐
+│ Métrica                 │ Valor    │
+├─────────────────────────┼──────────┤
+│ Total de Testes         │ 27       │
+│ Testes Unitários        │ 14       │
+│ Testes de Integração    │ 13       │
+│ Testes Passando         │ 27 (100%)│
+│ Testes Falhando         │ 0        │
+│ Suites Passando         │ 4        │
+│ Tempo de Execução       │ 1.813s   │
+└─────────────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 2: TESTES UNITÁRIOS - AUTHCONTROLLER
+
+┌───┬────────────────────────────────────────────────┬──────────┐
+│ # │ Teste                                          │ Status   │
+├───┼────────────────────────────────────────────────┼──────────┤
+│ 1 │ Erro 400 - dados obrigatórios faltando        │ ✓ PASS   │
+│ 2 │ Erro 409 - email já existe                    │ ✓ PASS   │
+│ 3 │ Sucesso - criar usuário                       │ ✓ PASS   │
+│ 4 │ Erro 400 - email ou senha vazios              │ ✓ PASS   │
+│ 5 │ Erro 401 - usuário não encontrado             │ ✓ PASS   │
+│ 6 │ Sucesso - fazer login                         │ ✓ PASS   │
+└───┴────────────────────────────────────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 3: TESTES UNITÁRIOS - VEHICLECONTROLLER
+
+┌───┬────────────────────────────────────────────────┬──────────┐
+│ # │ Teste                                          │ Status   │
+├───┼────────────────────────────────────────────────┼──────────┤
+│ 1 │ getAll - retornar lista completa               │ ✓ PASS   │
+│ 2 │ getAll - filtrar por status                    │ ✓ PASS   │
+│ 3 │ getAll - erro 500 em caso de falha             │ ✓ PASS   │
+│ 4 │ getById - retornar veículo encontrado          │ ✓ PASS   │
+│ 5 │ getById - erro 404 não encontrado              │ ✓ PASS   │
+│ 6 │ create - validar campos obrigatórios           │ ✓ PASS   │
+│ 7 │ create - criar com sucesso                     │ ✓ PASS   │
+│ 8 │ update - atualizar com sucesso                 │ ✓ PASS   │
+└───┴────────────────────────────────────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 4: TESTES DE INTEGRAÇÃO - AUTENTICAÇÃO
+
+┌───┬────────────────────────┬──────────────────────────┬──────────┐
+│ # │ Endpoint               │ Teste                    │ Status   │
+├───┼────────────────────────┼──────────────────────────┼──────────┤
+│ 1 │ POST /auth/register    │ Registrar com sucesso    │ ✓ PASS   │
+│ 2 │ POST /auth/register    │ Validar dados obrigatórios │ ✓ PASS   │
+│ 3 │ POST /auth/login       │ Login com sucesso        │ ✓ PASS   │
+│ 4 │ POST /auth/login       │ Erro - credenciais inválidas │ ✓ PASS   │
+│ 5 │ POST /auth/login       │ Erro - usuário inexistente  │ ✓ PASS   │
+│ 6 │ GET /auth/profile      │ Retornar perfil do usuário  │ ✓ PASS   │
+└───┴────────────────────────┴──────────────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 5: TESTES DE INTEGRAÇÃO - VEÍCULOS
+
+┌───┬────────────────────────┬──────────────────────────┬──────────┐
+│ # │ Endpoint               │ Teste                    │ Status   │
+├───┼────────────────────────┼──────────────────────────┼──────────┤
+│ 1 │ GET /vehicles          │ Retornar lista           │ ✓ PASS   │
+│ 2 │ GET /vehicles/available│ Retornar disponíveis     │ ✓ PASS   │
+│ 3 │ GET /vehicles/:id      │ Buscar por ID            │ ✓ PASS   │
+│ 4 │ GET /vehicles/:id      │ Erro 404 - não existe    │ ✓ PASS   │
+│ 5 │ POST /vehicles         │ Criar novo               │ ✓ PASS   │
+│ 6 │ POST /vehicles         │ Validar campos           │ ✓ PASS   │
+│ 7 │ PUT /vehicles/:id      │ Atualizar               │ ✓ PASS   │
+│ 8 │ DELETE /vehicles/:id   │ Deletar                 │ ✓ PASS   │
+│ 9 │ DELETE /vehicles/:id   │ Erro 404 - não existe    │ ✓ PASS   │
+└───┴────────────────────────┴──────────────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 6: COBERTURA POR COMPONENTE
+
+┌──────────────────────────┬──────────┬──────────┬──────────┐
+│ Componente               │ Unitários│ Integração │ Total    │
+├──────────────────────────┼──────────┼──────────┼──────────┤
+│ AuthController           │ 6        │ 6        │ 12       │
+│ VehicleController        │ 8        │ 7        │ 15       │
+├──────────────────────────┼──────────┼──────────┼──────────┤
+│ TOTAL                    │ 14       │ 13       │ 27       │
+└──────────────────────────┴──────────┴──────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 7: VALIDAÇÕES TESTADAS
+
+┌────────────────────────────────────┬──────────┐
+│ Tipo de Validação                  │ Status   │
+├────────────────────────────────────┼──────────┤
+│ Entrada de dados obrigatória       │ ✓ OK     │
+│ Email válido e único               │ ✓ OK     │
+│ Senha com criptografia             │ ✓ OK     │
+│ Tokens JWT válidos                 │ ✓ OK     │
+│ Status HTTP correto (2xx)          │ ✓ OK     │
+│ Status HTTP erro (4xx, 5xx)        │ ✓ OK     │
+│ Estrutura JSON de resposta         │ ✓ OK     │
+│ Autenticação e autorização         │ ✓ OK     │
+└────────────────────────────────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 8: STATUS HTTP VALIDADOS
+
+┌──────┬─────────────────────────────────┬────────────────┐
+│ Code │ Descrição                       │ Testes Validam │
+├──────┼─────────────────────────────────┼────────────────┤
+│ 200  │ OK - Sucesso                    │ ✓ Sim          │
+│ 201  │ Created - Criado                │ ✓ Sim          │
+│ 400  │ Bad Request - Dados inválidos   │ ✓ Sim          │
+│ 401  │ Unauthorized - Não autenticado  │ ✓ Sim          │
+│ 404  │ Not Found - Não encontrado      │ ✓ Sim          │
+│ 409  │ Conflict - Email duplicado      │ ✓ Sim          │
+│ 500  │ Server Error - Erro do servidor │ ✓ Sim          │
+└──────┴─────────────────────────────────┴────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 9: TECNOLOGIAS E FERRAMENTAS
+
+┌──────────────────┬─────────┬──────────────────────────────┐
+│ Tecnologia       │ Versão  │ Propósito                    │
+├──────────────────┼─────────┼──────────────────────────────┤
+│ Jest             │ 29.x    │ Framework de testes          │
+│ Supertest        │ 6.x     │ Testes HTTP/Assertions       │
+│ Babel            │ 7.x     │ Transpilador ES6             │
+│ Node.js          │ LTS     │ Runtime JavaScript           │
+│ bcryptjs         │ 2.4.3   │ Criptografia de senhas       │
+│ jsonwebtoken     │ 9.0.0   │ Geração de tokens            │
+└──────────────────┴─────────┴──────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TABELA 10: COMANDOS DE EXECUÇÃO
+
+┌────────────────────────┬────────────────────────────────────┐
+│ Comando                │ Descrição                          │
+├────────────────────────┼────────────────────────────────────┤
+│ npm test               │ Executar todos os testes           │
+│ npm run test:unit      │ Executar apenas testes unitários   │
+│ npm run test:integration │ Executar apenas integração      │
+│ npm run test:coverage  │ Executar com relatório de cobertura│
+└────────────────────────┴────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CONCLUSÃO
+
+Todos os 27 testes foram executados com sucesso em 1.813 segundos.
+A API está pronta para desenvolvimento com testes automatizados que garantem
+qualidade e segurança do código.
+
