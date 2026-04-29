@@ -37,11 +37,13 @@ router.get('/:id', async (req, res) => {
 // Admin
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const { name, brand, model, year, color, license_plate, daily_price } = req.body;
+    const { name, brand, model, year, color, license_plate, daily_price, image_urls } = req.body;
+    console.log('[ROUTE POST /vehicles] Received image_urls:', image_urls);
     if (!name || !brand || !model || !year || !daily_price) {
       return res.status(400).json({ error: 'Campos faltando' });
     }
-    const vehicle = await produtoService.criarVeiculo({ name, brand, model, year, color, license_plate, daily_price });
+    const vehicle = await produtoService.criarVeiculo({ name, brand, model, year, color, license_plate, daily_price, image_urls });
+    console.log('[ROUTE POST /vehicles] Created vehicle with image_urls:', vehicle.image_urls);
     res.status(201).json({ message: 'Veiculo criado', vehicle });
   } catch (error) {
     console.error('Erro ao criar veículo:', error);
@@ -51,11 +53,11 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
 
 router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const { name, brand, model, year, color, license_plate, daily_price, status } = req.body;
+    const { name, brand, model, year, color, license_plate, daily_price, status, image_urls } = req.body;
     const vehicle = await produtoService.atualizarVeiculo(req.params.id, {
       name: name || undefined, brand: brand || undefined, model: model || undefined,
       year: year || undefined, color: color || undefined, license_plate: license_plate || undefined,
-      daily_price: daily_price || undefined, status: status || undefined
+      daily_price: daily_price || undefined, status: status || undefined, image_urls: image_urls || undefined
     });
     res.json({ message: 'Veiculo atualizado', vehicle });
   } catch (error) {

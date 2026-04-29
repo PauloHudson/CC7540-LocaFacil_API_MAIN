@@ -48,11 +48,14 @@ class ElectronicModel {
 
   static async create(data) {
     const { name, brand, model, specifications, daily_price, image_urls } = data;
+    console.log('[MODEL Electronic.create] Input image_urls:', image_urls);
     const normalizedImageUrls = normalizeImageUrls(image_urls);
+    console.log('[MODEL Electronic.create] Normalized image_urls:', normalizedImageUrls);
     const result = await pool.query(
       'INSERT INTO electronics (name, brand, model, specifications, daily_price, image_urls) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
       [name, brand, model, specifications, daily_price, normalizedImageUrls]
     );
+    console.log('[MODEL Electronic.create] Result from DB image_urls:', result.rows[0].image_urls);
     return result.rows[0];
   }
 

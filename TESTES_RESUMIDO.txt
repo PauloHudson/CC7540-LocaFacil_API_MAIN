@@ -1,12 +1,3 @@
-ESTRATÉGIA DE TESTES - API LOCAFÁCIL (VERSÃO RESUMIDA)
-
-DISCIPLINA: CC7540 - Testes de Software
-PROJETO: LocaFácil - Plataforma de Aluguel de Veículos
-DATA: 28 de Abril de 2026
-DESENVOLVEDOR: Paulo
-
-═══════════════════════════════════════════════════════════════════════════════
-
 1. RESUMO EXECUTIVO
 
 Foi implementada uma estratégia completa de testes com 27 testes automatizados, 
@@ -76,7 +67,7 @@ Success Rate: 100%
 
 DETALHAMENTO:
 
-Testes Unitários - VehicleController ✅
+Testes Unitários - VehicleController 
 ├── Retornar lista de veículos
 ├── Filtrar veículos por status
 ├── Retornar erro 500 em caso de falha
@@ -86,7 +77,7 @@ Testes Unitários - VehicleController ✅
 ├── Criar veículo com sucesso
 └── Atualizar veículo com sucesso
 
-Testes Unitários - AuthController ✅
+Testes Unitários - AuthController 
 ├── Retornar erro 400 - dados obrigatórios
 ├── Retornar erro 409 - email já existe
 ├── Criar usuário com sucesso
@@ -94,14 +85,14 @@ Testes Unitários - AuthController ✅
 ├── Retornar erro 401 - usuário não encontrado
 └── Fazer login com sucesso
 
-Testes de Integração - Autenticação ✅
+Testes de Integração - Autenticação 
 ├── Registrar novo usuário com sucesso
 ├── Falhar se dados obrigatórios faltam
 ├── Fazer login com sucesso
 ├── Retornar erro se credenciais faltam
 └── Retornar erro se usuário não existe
 
-Testes de Integração - Veículos ✅
+Testes de Integração - Veículos 
 ├── Retornar lista de todos os veículos
 ├── Retornar veículos disponíveis
 ├── Retornar veículo específico por ID
@@ -241,28 +232,5 @@ Todos os critérios foram atendidos:
 ✅ Tratamento de erros (4xx, 5xx)
 ✅ Mocking de dependências externas
 ✅ Documentação completa
-
-═══════════════════════════════════════════════════════════════════════════════
-
-11. CONCLUSÃO
-
-A API LocaFácil possui uma estratégia robusta de testes que valida:
-
-• A lógica interna dos controllers através de testes unitários
-• A comunicação entre componentes através de testes de integração
-• O tratamento correto de erros e validações
-• A segurança da autenticação e autorização
-
-O resultado de 27/27 testes passando garante que os componentes principais 
-estão funcionando corretamente e que mudanças futuras podem ser validadas 
-rapidamente através da suite de testes automatizados.
-
-═══════════════════════════════════════════════════════════════════════════════
-
-DOCUMENTAÇÃO COMPLETA DISPONÍVEL EM:
-
-• ESTRATEGIA_TESTES.md - Documento detalhado com tabelas
-• EVIDENCIAS_TESTES.md - Prints e evidências visuais
-• GUIA_EXECUCAO.md - Guia de execução dos testes
 
 ═══════════════════════════════════════════════════════════════════════════════

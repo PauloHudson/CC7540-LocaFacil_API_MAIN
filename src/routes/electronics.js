@@ -37,11 +37,13 @@ router.get('/:id', async (req, res) => {
 // Admin
 router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const { name, brand, model, specifications, daily_price } = req.body;
+    const { name, brand, model, specifications, daily_price, image_urls } = req.body;
+    console.log('[ROUTE POST /electronics] Received image_urls:', image_urls);
     if (!name || !brand || !model || !daily_price) {
       return res.status(400).json({ error: 'Campos faltando' });
     }
-    const electronic = await produtoService.criarEletronico({ name, brand, model, specifications, daily_price });
+    const electronic = await produtoService.criarEletronico({ name, brand, model, specifications, daily_price, image_urls });
+    console.log('[ROUTE POST /electronics] Created electronic with image_urls:', electronic.image_urls);
     res.status(201).json({ message: 'Eletronico criado', electronic });
   } catch (error) {
     console.error('Erro ao criar eletrônico:', error);
@@ -51,11 +53,11 @@ router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
 
 router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const { name, brand, model, specifications, daily_price, status } = req.body;
+    const { name, brand, model, specifications, daily_price, status, image_urls } = req.body;
     const electronic = await produtoService.atualizarEletronico(req.params.id, {
       name: name || undefined, brand: brand || undefined, model: model || undefined,
       specifications: specifications || undefined, daily_price: daily_price || undefined,
-      status: status || undefined
+      status: status || undefined, image_urls: image_urls || undefined
     });
     res.json({ message: 'Eletronico atualizado', electronic });
   } catch (error) {

@@ -6,13 +6,22 @@ jest.mock('../../../src/models/Vehicle');
 describe('VehicleController - Testes Unitários', () => {
   let mockReq;
   let mockRes;
+  let consoleErrorSpy;
+  let consoleLogSpy;
 
   beforeEach(() => {
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     mockRes = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis()
     };
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
+    consoleLogSpy.mockRestore();
   });
 
   describe('getAll', () => {
