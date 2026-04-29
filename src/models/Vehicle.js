@@ -5,6 +5,12 @@ const normalizeImageUrls = (imageUrls) => {
     return null;
   }
 
+  // Handle objects (convert keys to array)
+  if (typeof imageUrls === 'object' && !Array.isArray(imageUrls)) {
+    const urls = Object.keys(imageUrls).filter(url => url && url.trim());
+    return urls.length ? urls : null;
+  }
+
   if (Array.isArray(imageUrls)) {
     const normalized = imageUrls.map((url) => String(url).trim()).filter(Boolean);
     return normalized.length ? normalized : null;
