@@ -12,16 +12,27 @@ class AuthController {
   async register(req, res) {
     try {
       const { name, email, password, phone, cpf } = req.body;
+      const normalizedEmail = String(email || '').trim().toLowerCase();
+      const normalizedCpf = UserModel.normalizeCpf(cpf);
 
       // Validação básica
       if (!name || !email || !password) {
         return res.status(400).json({ error: 'Nome, email e senha obrigatorios' });
       }
 
+      if (!normalizedCpf || normalizedCpf.length !== 11) {
+        return res.status(400).json({ error: 'CPF invalido' });
+      }
+
       // Verificar se usuário já existe
-      const existingUser = await UserModel.findByEmail(email);
+      const existingUser = await UserModel.findByEmail(normalizedEmail);
       if (existingUser) {
         return res.status(409).json({ error: 'Email ja cadastrado' });
+      }
+
+      const existingCpf = await UserModel.findByCpf(normalizedCpf);
+      if (existingCpf) {
+        return res.status(409).json({ error: 'CPF ja cadastrado' });
       }
 
       // Hash da senha
@@ -30,10 +41,10 @@ class AuthController {
       // Criar usuário
       const user = await UserModel.create({
         name,
-        email,
+        email: normalizedEmail,
         password: hashedPassword,
         phone,
-        cpf,
+        cpf: normalizedCpf,
         is_admin: false
       });
 
@@ -51,6 +62,18 @@ class AuthController {
       });
     } catch (error) {
       console.error('Erro no registro:', error);
+
+      if (error.code === '23505') {
+        const constraint = String(error.constraint || '');
+        if (constraint.includes('cpf')) {
+          return res.status(409).json({ error: 'CPF ja cadastrado' });
+        }
+        if (constraint.includes('email')) {
+          return res.status(409).json({ error: 'Email ja cadastrado' });
+        }
+        return res.status(409).json({ error: 'Usuario ja cadastrado' });
+      }
+
       res.status(500).json({ error: 'Erro ao registrar' });
     }
   }

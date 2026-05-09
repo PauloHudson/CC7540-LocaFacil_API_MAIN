@@ -1,6 +1,10 @@
 const pool = require('../config/database');
 
 class UserModel {
+  static normalizeCpf(cpf) {
+    return String(cpf || '').replace(/\D/g, '');
+  }
+
   static async findById(id) {
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
     return result.rows[0];
@@ -11,11 +15,25 @@ class UserModel {
     return result.rows[0];
   }
 
+  static async findByCpf(cpf) {
+    const normalizedCpf = UserModel.normalizeCpf(cpf);
+    if (!normalizedCpf) {
+      return null;
+    }
+
+    const result = await pool.query(
+      "SELECT * FROM users WHERE regexp_replace(cpf, '\\D', '', 'g') = $1",
+      [normalizedCpf]
+    );
+    return result.rows[0];
+  }
+
   static async create(data) {
     const { name, email, password, phone, cpf, is_admin } = data;
+    const normalizedCpf = UserModel.normalizeCpf(cpf);
     const result = await pool.query(
       'INSERT INTO users (name, email, password, phone, cpf, is_admin) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, email, is_admin, created_at',
-      [name, email, password, phone, cpf, is_admin || false]
+      [name, email, password, phone, normalizedCpf || null, is_admin || false]
     );
     return result.rows[0];
   }
